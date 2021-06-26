@@ -1,5 +1,5 @@
-from login_regapp.models import Destination, Userreg
-from django.shortcuts import render, HttpResponse, redirect
+from django.db.models import Userreg
+from django.shortcuts import render, redirect
 from django.contrib import messages
 import bcrypt
 # Create your views here.
@@ -8,8 +8,6 @@ def regandlogin(request):
     context ={
         "user_reg" : Userreg.objects.all()
     }
-
-
     request.session["logged"] = 0
     return render(request, "regpage.html", context)
 
@@ -18,7 +16,6 @@ def registration(request):
     if len(errors) > 0:          
         for key, value in errors.items():
             messages.error(request, value)
-            
         return redirect("/")
     else:   
         user = Userreg.objects.create(
@@ -65,26 +62,3 @@ def inpage(request):
     if request.session["logged"] != 1:
         return redirect('/')
     return render(request, "pass.html", context)
-
-def newtrip(request):
-    id = Userreg.objects.filter(email = request.session["email"])
-    id2 = id[0]
-    test = Destination.objects.get(id=1)  
-    
-    trip = Destination.objects.create(
-            city = request.POST['city'],
-            plan = request.POST['plan'],
-            startdate = request.POST['startdate'],
-            enddate = request.POST['enddate']
-        )
-    trip.traveler.add(id2)
-    context ={
-        "identifier" : id2 , 
-        "test" : trip
-    }
-    return render(request, "pass.html", context)
-
-def delete(request, id):
-    destroy = Destination.objects.get(id=id)
-    destroy.delete()
-    return redirect("/pass")

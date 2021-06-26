@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>    
+    <h1>Hello {{request.session.name}} {{identifier.travel}} {{test.city}}</h1>
+    <h3>Your trips:{{ identifier.id}} {{ identifier.email}} {{ identifier.first_name}}</h3>
+    {%for t in test.traveler%}
+        <p>{{t.city}}{{t.traveler.first_name}}{{t.traveler.email}}</p>  
+        <td><a href="delete/{{t.id}}">Delete</a></td>             
+    {%endfor%}
+
+
+    <form id="newtrip"action="/newtrip" method="post">
+        {% csrf_token %}   
+        <ul>            
+            <ul><label for="city"><title></title>City</label></ul>
+            <ul><input type="text" name="city" id="city" value="{{ Destination.city}}"></ul> 
+            <ul><label for="plan"><title></title>Plan</label></ul>
+            <ul><input type="text" name="plan" id="plan" value="{{ Destination.plan}}"></ul>
+            <ul><label for="startdate"><title></title>Start Date</label></ul>
+            <ul><input type="text" name="startdate" id="startdate" value="{{ Destination.startdate}}"></ul> 
+            <ul><label for="enddate"><title></title>End Date</label></ul>
+            <ul><input type="text" name="enddate" id="enddate" value="{{ Destination.enddate}}"></ul>           
+        </ul>   
+        <input type="submit" value="create new trip">  
+    </form>
+    
+    
+    
+    
+    
+    {%for show in tobedeleted%}
+                <tbody>
+                    <tr>                       
+                        <th scope="row">{{ show.id }}</th> 
+                        <td><a href="delete/{{show.id}}">Delete</a></td>                                  
+                    </tr>                
+                </tbody>
+    {% endfor %}  
+    
+    
+    
+    <form action="/logout" method="post">
+        {% csrf_token %}        
+        <input type="submit" value="logout">       
+    </form>
+</body>
+</html>

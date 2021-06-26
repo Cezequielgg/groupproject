@@ -7,6 +7,4 @@ urlpatterns = [
     path('login',views.login),
     path('logout',views.logout), 
     path('pass',views.inpage),
-    path('newtrip',views.newtrip),
-    path('delete/<int:id>',views.delete)
 ]

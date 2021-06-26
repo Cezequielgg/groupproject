@@ -34,7 +34,7 @@ class Regvalidate(models.Manager):
         user = Userreg.objects.filter(email = postData['email'])
         errors2 = {}  
         if len(user) == 0:
-            errors2['username'] = ("This email adress hasnt been register")
+            errors2['username'] = ("This email address hasn't been register")
         else:
             if not bcrypt.checkpw(postData['password'].encode(), user[0].password.encode()):
                 errors2['password'] = ("wrong password")           
@@ -49,10 +49,3 @@ class Userreg(models.Model):
     password = models.CharField(max_length=255)
     
     objects = Regvalidate() 
-
-class Destination(models.Model):
-    city = models.CharField(max_length=255)
-    plan = models.CharField(max_length=255)
-    startdate = models.CharField(max_length=255)
-    enddate = models.CharField(max_length=255)
-    traveler = models.ManyToManyField(Userreg, related_name="travel")

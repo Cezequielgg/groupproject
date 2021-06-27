@@ -40,9 +40,9 @@
             {% csrf_token %}
             <ul>
                 <ul><label for="email"><title></title>Email</label></ul>
-                <ul><input type="text" name="email" id="email" value="{{ Userreg.email}}"></ul>
+                <ul><input type="text" name="email" value="{{ Userreg.email }}"></ul>
                 <ul><label for="password"><title></title>Password</label></ul>
-                <ul><input type="text" name="password" id="password" value="{{ Userreg.password }}"></ul>
+                <ul><input type="password" name="password" value="{{ Userreg.password }}"></ul>
                 <ul><input type="submit" value="Login"></ul> 
             </ul>    
         </form>

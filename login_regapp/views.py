@@ -1,7 +1,8 @@
-from django.db.models import Userreg
+from login_regapp.models import Userreg
 from django.shortcuts import render, redirect
 from django.contrib import messages
 import bcrypt
+
 # Create your views here.
 #validations 
 def regandlogin(request):
@@ -50,8 +51,8 @@ def logout(request):
     request.session.clear()
     return redirect("/")
 
-def inpage(request):
-    if request.method == "GET": 
+def inpage(request):  
+    if  request.session["logged"] != 1:
         return redirect("/") 
     id = Userreg.objects.filter(email = request.session["email"])
     id2 = id[0]

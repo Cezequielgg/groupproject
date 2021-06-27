@@ -61,22 +61,13 @@ class PropertyManager(models.Manager):
             errors["zip_code_length"] = "Zip code must be 5 character long"
         return errors
 
-HOME_CHOICES = (
-    ('single_family_home', 'Single Family Home'),
-    ('townhouse', 'Townhouse'),
-    ('condominium', 'Condominium'),
-    ('multi_unit_building', 'Multi Unit Building'),
-    ('farmland', 'Farmland'),
-    ('undeveloped_land', 'Undeveloped Land')
-)
-
 class Property(models.Model):
     address_number = models.IntegerField()
     street = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     state = models.CharField(max_length=2)
     zip_code = models.IntegerField()
-    home_type = models.CharField(max_length=255, choices=HOME_CHOICES, default='single_family_home')
+    home_type = models.CharField(max_length=255)
     creator = models.ForeignKey(Userreg, related_name = "property_created", on_delete=models.CASCADE)
     users_that_liked = models.ManyToManyField(Userreg, related_name= "property_liked")
     created_at = models.DateTimeField(auto_now_add = True)

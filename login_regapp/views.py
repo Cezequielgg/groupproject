@@ -1,4 +1,4 @@
-from login_regapp.models import Userreg
+from .models import Userreg, Property
 from django.shortcuts import render, redirect
 from django.contrib import messages
 import bcrypt
@@ -27,7 +27,9 @@ def registration(request):
         )
         print(user.password)
         request.session["logged"] = 1
-        return render(request, "pass.html")
+        request.session["name"] = user[0].first_name
+        request.session["email"] = user[0].email
+        return redirect('/pass')
 
 def login(request):
     count = 0
@@ -43,9 +45,7 @@ def login(request):
     request.session["logged"] = 1
     request.session["name"] = user[0].first_name
     request.session["email"] = user[0].email
-    # request.session["last_name"] = request.POST['last_name']
-    
-    return redirect('/pass')
+    return redirect("/pass")
 
 def logout(request):
     request.session.clear()
@@ -63,3 +63,75 @@ def inpage(request):
     if request.session["logged"] != 1:
         return redirect('/')
     return render(request, "pass.html", context)
+
+def properties(request):
+    if "logged" not in request.session:
+        return redirect('/')
+    context = {
+        "current_user" : Userreg.objects.get(),
+        "all_properties" : Property.objects.all(),
+    }
+    return render(request, "properties_all.html", context)
+
+def create_property(request):
+    if "logged" not in request.session:
+        return redirect('/')
+    if request.method == "POST":
+        errors = Property.objects.property_validator(request.POST)
+        if len(errors) > 0:
+            for error in errors:
+                messages.error(request, errors[error])
+            return redirect('/pass')
+        else:
+            new_property = Property.objects.create(
+                address_number = request.POST["address_number"],
+                street = request.POST["street"],
+                city = request.POST["city"],
+                state =  request.POST["state"],
+                zip_code =  request.POST["zip_code"],
+                home_type =  request.POST["home_type"],
+                creator = Userreg.objects.get(email=request.session["email"])
+            )
+            return redirect('/properties')
+
+def property_detail(request, property_id):
+    if "logged" not in request.session:
+        return redirect('/')
+    property_with_id = Property.objects.filter(id=property_id)
+    if len(property_with_id) == 0:
+        return redirect('/pass')
+    context = {
+        "current_user" : Userreg.objects.get(email=request.session["email"]),
+        "one_property" : Property.objects.get(id=property_id),
+    }
+    return render(request, "property_detail.html", context)
+
+def delete_property(request, property_id):
+    if "logged" not in request.session:
+        return redirect('/')
+    property_with_id = Property.objects.filter(id=property_id)
+    if len(property_with_id) == 0:
+        return redirect('/pass')
+    if request.method == "POST":
+        property_to_delete = Property.objects.get(id=property_id)
+        if property_to_delete.creator.email == request.session['email']:
+            property_to_delete.delete()
+    return redirect('/pass')
+
+def like_property(request, property_id):
+    if "logged" not in request.session:
+        return redirect('/')
+    if request.method == "POST":
+        one_property = Property. objects.get(id=property_id)
+        current_user = Userreg.objects.get(email=request.session['email'])
+        one_property.users_that_like.add(current_user)
+    return redirect(f'/property/{one_property.id}')
+
+def unlike_property(request, property_id):
+    if "logged" not in request.session:
+        return redirect('/')
+    if request.method == "POST":
+        one_property = Property. objects.get(id=property_id)
+        current_user = Userreg.objects.get(email=request.session['email'])
+        one_property.users_that_like.remove(current_user)
+    return redirect(f'/property/{one_property.id}')

@@ -2,6 +2,7 @@ from .models import Userreg, Property
 from django.shortcuts import render, redirect
 from django.contrib import messages
 import bcrypt
+
 # Create your views here.
 #validations 
 def regandlogin(request):
@@ -48,7 +49,9 @@ def logout(request):
     request.session.clear()
     return redirect("/")
 
-def inpage(request):
+def inpage(request):  
+    if  request.session["logged"] != 1:
+        return redirect("/") 
     id = Userreg.objects.filter(email = request.session["email"])
     id2 = id[0]
     context ={

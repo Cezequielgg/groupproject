@@ -68,7 +68,7 @@ def properties(request):
     if "logged" not in request.session:
         return redirect('/')
     context = {
-        "current_user" : Userreg.objects.get(),
+        "current_user" : Userreg.objects.get(email=request.session["email"]),
         "all_properties" : Property.objects.all(),
     }
     return render(request, "properties_all.html", context)

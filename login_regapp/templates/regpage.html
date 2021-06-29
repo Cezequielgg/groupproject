@@ -9,12 +9,20 @@
     
     <link rel='stylesheet' type= 'text/css' href="{% static 'loginreg.css' %}">
 
+<<<<<<< HEAD
     
 </head>
 <body>
     
     
 <div id = 'wrapper'>
+=======
+    <title>Login and Registration</title>
+</head>
+<body>
+    
+    <div id="registration"> 
+>>>>>>> e42d36d282d7a9dab893273d8583dfaeeb84b461
         {% if messages %}
         <ul class="messages">    
             {% for message in messages %}    
@@ -22,8 +30,9 @@
             {% endfor %}
         </ul>
         {% endif %}
-        <form action="/registration" method="post"  >
+        <form action="/registration" method="post">
             {% csrf_token %}
+<<<<<<< HEAD
             
             <div id="registration" > <ul><h1>Register: </h1>
                 
@@ -38,12 +47,27 @@
                 <span class = 'label'><ul><label for="password2"><title></title>Confirm Password</label></ul></span>
                 <span class='field'><ul><input type="text" name="password2" id="password2" value="{{ Userreg.name}}"></ul></span>
                 <span class = 'button'><ul><input type="submit" value="Register"></ul></span>
+=======
+            <ul>
+                <ul><label for="first_name"><title></title>First Name</label></ul>
+                <ul><input type="text" name="first_name" id="first_name" value="{{ Userreg.first_name }}"></ul>
+                <ul><label for="last_name"><title></title>Last Name</label></ul>
+                <ul><input type="text" name="last_name" id="last_name" value="{{ Userreg.last_name }}"></ul>
+                <ul><label for="email"><title></title>Email</label></ul>
+                <ul><input type="text" name="email" id="email" value="{{ Userreg.email }}"></ul>
+                <ul><label for="password"><title></title>Password</label></ul>
+                <ul><input type="password" name="password" id="password" value="{{ Userreg.password }}"></ul>
+                <ul><label for="password2"><title></title>Confirm Password</label></ul>
+                <ul><input type="password" name="password2" id="password2" value="{{ Userreg.name }}"></ul>
+                <ul><input type="submit" value="Register"></ul>
+>>>>>>> e42d36d282d7a9dab893273d8583dfaeeb84b461
             </ul>   
         </form>    
     </div>
     
         <form action="/login" method="post">
             {% csrf_token %}
+<<<<<<< HEAD
             <ul><div id= 'login'><h1>Login</h1>
                 <span class ='label'><ul><label for="email"><title></title>Email</label></ul></span>
                 <span class='field'><ul><input type="text" name="email" id="email" value="{{ Userreg.email}}"></ul></span>
@@ -51,6 +75,15 @@
                 <span class='field'><ul><input type="text" name="password" id="password" value="{{ Userreg.password }}"></ul></span>
                 <span class = 'button'><ul><input type="submit" value="Login"></ul></span>
             </ul></div>
+=======
+            <ul>
+                <ul><label for="email"><title></title>Email</label></ul>
+                <ul><input type="text" name="email" value="{{ Userreg.email }}"></ul>
+                <ul><label for="password"><title></title>Password</label></ul>
+                <ul><input type="password" name="password" value="{{ Userreg.password }}"></ul>
+                <ul><input type="submit" value="Login"></ul> 
+            </ul>    
+>>>>>>> e42d36d282d7a9dab893273d8583dfaeeb84b461
         </form>
 </div>
 </body>

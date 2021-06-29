@@ -66,20 +66,7 @@ def inpage(request):
         return redirect('/')
     return render(request, "pass.html", context)
 
-# def properties(request):
-#     if "logged" not in request.session:
-#         return redirect('/')
-#     user = Userreg.objects.create(
-#     address_number = request.POST['Hi_MY_name_is_error'],
-#     street = request.POST['street'],
-#     city = request.POST[' city'],
-#     state  = request.POST['state'],
-#     zip_code  = request.POST['zip_code'],
-#     home_type  = request.POST['home_type'],
-#     creator  =  Userreg.objects.get(id = request.session["id"] )
-#     )       
-    
-#     return render(request, "properties_all.html")
+
 
 def create_property(request):
     if "logged" not in request.session:
@@ -118,17 +105,48 @@ def delete_property(request, property_id):
     if "logged" not in request.session:
         return redirect('/')
     property_with_id = Property.objects.filter(id=property_id)
-    if len(property_with_id) == 0:
-        return redirect('/pass')
-    if request.method == "POST":
-        property_to_delete = Property.objects.get(id=property_id)
-        if property_to_delete.creator.email == request.session['email']:
-            property_to_delete.delete()
-    return redirect('/pass')
+    property_to_delete = Property.objects.get(id=property_id)
+    property_to_delete.delete()
+    
+    
+    
+    return redirect("/property_all")
 
-def all_properties(request, id):
+
+def update_page_property(request, property_id):
+    form_tobe_change = Property.objects.get(id=property_id)
+    context = {
+        "tobe_change" : form_tobe_change
+    }
+    return render(request,"Edit_property_page.html", context )
+
+
+def edit_property(request, property_id ):
+    id = property_id
+    tobe_change =  Property.objects.get(id=property_id)
+    context = {
+        "id" : id, 
+        "properties" : tobe_change
+    }      
+    errors = Property.objects.property_validator(request.POST)
+    if len(errors) > 0:
+        for error in errors:
+                messages.error(request, errors[error])
+        return redirect("/")
+    else:
+        tobe_change.address_number  = request.POST["address_number"]
+        tobe_change.street = request.POST["street"]
+        tobe_change.city = request.POST["city"]
+        tobe_change.state = request.POST["state"]
+        tobe_change.zip_code = request.POST["zip_code"]
+        tobe_change.home_type = request.POST["home_type"]
+        return redirect("/property_all")
+    
+
+
+def all_properties(request):
     #generates a list of all your properties 
-    creator_properties = Property.objects.filter(creator = Userreg.objects.get(id = id))
+    creator_properties = Property.objects.filter(creator = Userreg.objects.get(id = request.session["id"]))
     
     
     context = {

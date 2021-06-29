@@ -9,9 +9,11 @@ urlpatterns = [
     path('pass',views.inpage),
     # path('properties', views.properties),
     path('create_property', views.create_property),
-    path('property_all/<int:id>', views.all_properties),
+    path('property_all', views.all_properties),
     path('property/<int:property_id>', views.property_detail),
     path('property/delete/<int:property_id>', views.delete_property),
-    path('property/like/<int:property_id>', views.like_property),
-    path('property/unlike/<int:property_id>', views.unlike_property),
+    path('property/page/<int:property_id>', views.update_page_property),
+    path('edit/<int:property_id>', views.edit_property)
+    # path('property/like/<int:property_id>', views.like_property),
+    # path('property/unlike/<int:property_id>', views.unlike_property),
 ]

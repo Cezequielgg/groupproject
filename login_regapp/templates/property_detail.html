@@ -16,6 +16,9 @@
         <p>State: {{properties.state}}</p>
         <p>Event Created by:{{properties.creator.first_name}}</p>
         
+        
+        <a href="/property/page/{{properties.id}}">Edit property</a>
+        <a href="/property/delete/{{properties.id}}">Delete properties</a>
     {% endfor %}
 
     

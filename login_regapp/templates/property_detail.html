@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property List</title>
+</head>
+<body>
+    {% for properties in all_my_properties %}  
+        
+        
+        <p>Address number: {{properties.address_number}}</p>
+        <p>Street address: {{properties.street}}</p>
+        <p>City: {{properties.city}}</p>
+        <p>State: {{properties.state}}</p>
+        <p>Event Created by:{{properties.creator.first_name}}</p>
+        
+    {% endfor %}
+
+    
+</body>
+</html>

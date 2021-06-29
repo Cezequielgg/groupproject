@@ -18,11 +18,20 @@
     <h2>Add a Property Here!</h2>
     <form action="create_property" method="POST">
         {% csrf_token %}
-        <label>Address Number</label><input type="number" name="address_number"><br>
-        <label>Street</label><input type="text" name="street"><br>
-        <label>City</label><input type="text" name="city"><br>
-        <label>State</label><input type="text" name="state"><br>
-        <label>Zip Code</label><input type="number" name="zip_code"><br>
+        <label>Address Number</label>
+        <input type="number" name="address_number"><br>
+        
+        <label>Street</label>
+        <input type="text" name="street"><br>
+        
+        <label>City</label>
+        <input type="text" name="city"><br>
+        
+        <label>State</label>
+        <input type="text" name="state"><br>
+        
+        <label>Zip Code</label>
+        <input type="number" name="zip_code"><br>
         <label for="home_type">Home Type:</label>
         <select id="home_type" name="home_type">
             <option value="single_family_home">Single Family Home</option>
@@ -33,6 +42,10 @@
         </select>
         <input type="submit" value="Add Property">
     </form>
+    <a href="/property_all/{{request.session.id}}">See all my properties</a>
+    
+    
+    
     <form action="/logout" method="post">
         {% csrf_token %}        
         <input type="submit" value="logout">       

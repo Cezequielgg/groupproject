@@ -27,8 +27,9 @@ def registration(request):
         )
         print(user.password)
         request.session["logged"] = 1
-        request.session["name"] = user[0].first_name
-        request.session["email"] = user[0].email
+        request.session["id"] = user.id
+        request.session["name"] = user.first_name
+        request.session["email"] = user.email
         return redirect('/pass')
 
 def login(request):
@@ -43,6 +44,7 @@ def login(request):
             messages.error(request, value)            
         return redirect("/")
     request.session["logged"] = 1
+    request.session["id"] = user[0].id
     request.session["name"] = user[0].first_name
     request.session["email"] = user[0].email
     return redirect("/pass")
@@ -55,7 +57,7 @@ def inpage(request):
     if  request.session["logged"] != 1:
         return redirect("/") 
     id = Userreg.objects.filter(email = request.session["email"])
-    id2 = id[0]
+    id2 = id[0].id
     context ={
         "identifier" : id2,
         "tobedeleted" : Userreg.objects.all()
@@ -64,14 +66,20 @@ def inpage(request):
         return redirect('/')
     return render(request, "pass.html", context)
 
-def properties(request):
-    if "logged" not in request.session:
-        return redirect('/')
-    context = {
-        "current_user" : Userreg.objects.get(),
-        "all_properties" : Property.objects.all(),
-    }
-    return render(request, "properties_all.html", context)
+# def properties(request):
+#     if "logged" not in request.session:
+#         return redirect('/')
+#     user = Userreg.objects.create(
+#     address_number = request.POST['Hi_MY_name_is_error'],
+#     street = request.POST['street'],
+#     city = request.POST[' city'],
+#     state  = request.POST['state'],
+#     zip_code  = request.POST['zip_code'],
+#     home_type  = request.POST['home_type'],
+#     creator  =  Userreg.objects.get(id = request.session["id"] )
+#     )       
+    
+#     return render(request, "properties_all.html")
 
 def create_property(request):
     if "logged" not in request.session:
@@ -92,7 +100,7 @@ def create_property(request):
                 home_type =  request.POST["home_type"],
                 creator = Userreg.objects.get(email=request.session["email"])
             )
-            return redirect('/properties')
+            return redirect('/pass')
 
 def property_detail(request, property_id):
     if "logged" not in request.session:
@@ -117,6 +125,18 @@ def delete_property(request, property_id):
         if property_to_delete.creator.email == request.session['email']:
             property_to_delete.delete()
     return redirect('/pass')
+
+def all_properties(request, id):
+    #generates a list of all your properties 
+    creator_properties = Property.objects.filter(creator = Userreg.objects.get(id = id))
+    
+    
+    context = {
+        "all_my_properties" : creator_properties        
+    }
+
+    return render ( request,"property_detail.html", context)
+
 
 def like_property(request, property_id):
     if "logged" not in request.session:

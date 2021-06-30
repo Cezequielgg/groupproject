@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href= "{% static '/css/pass.css'%}">
     <title>Pass</title>
 </head>
 <body>    
+    <div id = 'wrapper'>
+        <div id ='twowrap'>
+
+    <img src ="{% static 'images/LogoNZ.png'%}" alt='NotZillow logo'>    
     <h1>Passed Registration and Login {{ request.session.name }}</h1>
     {% if messages %}
     <ul>    
@@ -18,6 +24,7 @@
     <h2>Add a Property Here!</h2>
     <form action="create_property" method="POST">
         {% csrf_token %}
+        <div id = 'fields'>
         <label>Address Number</label><input type="number" name="address_number"><br>
         <label>Street</label><input type="text" name="street"><br>
         <label>City</label><input type="text" name="city"><br>
@@ -30,12 +37,12 @@
             <option value="condominium">Condominium</option>
             <option value="multi_unit_building">Multi Unit Building</option>
             <option value="undeveloped_land">Undeveloped Land</option>
-        </select>
+        </select><br><br><br>
         <input type="submit" value="Add Property">
-    </form>
-    <form action="/logout" method="post">
+    </form></div>
+    <div id = 'logout'><form action="/logout" method="post">
         {% csrf_token %}        
-        <input type="submit" value="logout">       
-    </form>
+        <input type="submit" value="logout"></div>       
+    </form></div></div>
 </body>
 </html>

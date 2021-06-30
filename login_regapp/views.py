@@ -27,8 +27,9 @@ def registration(request):
         )
         print(user.password)
         request.session["logged"] = 1
-        request.session["name"] = user[0].first_name
-        request.session["email"] = user[0].email
+        request.session["id"] = user.id
+        request.session["name"] = user.first_name
+        request.session["email"] = user.email
         return redirect('/pass')
 
 def login(request):
@@ -43,6 +44,7 @@ def login(request):
             messages.error(request, value)            
         return redirect("/")
     request.session["logged"] = 1
+    request.session["id"] = user[0].id
     request.session["name"] = user[0].first_name
     request.session["email"] = user[0].email
     return redirect("/pass")
@@ -55,7 +57,7 @@ def inpage(request):
     if  request.session["logged"] != 1:
         return redirect("/") 
     id = Userreg.objects.filter(email = request.session["email"])
-    id2 = id[0]
+    id2 = id[0].id
     context ={
         "identifier" : id2,
         "tobedeleted" : Userreg.objects.all()
@@ -64,14 +66,6 @@ def inpage(request):
         return redirect('/')
     return render(request, "pass.html", context)
 
-def properties(request):
-    if "logged" not in request.session:
-        return redirect('/')
-    context = {
-        "current_user" : Userreg.objects.get(email=request.session["email"]),
-        "all_properties" : Property.objects.all(),
-    }
-    return render(request, "properties_all.html", context)
 
 def create_property(request):
     if "logged" not in request.session:
@@ -92,7 +86,7 @@ def create_property(request):
                 home_type =  request.POST["home_type"],
                 creator = Userreg.objects.get(email=request.session["email"])
             )
-            return redirect('/properties')
+            return redirect('/pass')
 
 def property_detail(request, property_id):
     if "logged" not in request.session:
@@ -110,13 +104,57 @@ def delete_property(request, property_id):
     if "logged" not in request.session:
         return redirect('/')
     property_with_id = Property.objects.filter(id=property_id)
-    if len(property_with_id) == 0:
-        return redirect('/pass')
-    if request.method == "POST":
-        property_to_delete = Property.objects.get(id=property_id)
-        if property_to_delete.creator.email == request.session['email']:
-            property_to_delete.delete()
-    return redirect('/pass')
+    property_to_delete = Property.objects.get(id=property_id)
+    property_to_delete.delete()
+    
+    
+    
+    return redirect("/property_all")
+
+
+def update_page_property(request, property_id):
+    form_tobe_change = Property.objects.get(id=property_id)
+    context = {
+        "tobe_change" : form_tobe_change
+    }
+    return render(request,"Edit_property_page.html", context )
+
+
+def edit_property(request, property_id ):
+    id = property_id
+    tobe_change =  Property.objects.get(id=property_id)
+    context = {
+        "id" : id, 
+        "properties" : tobe_change
+    }      
+    errors = Property.objects.property_validator(request.POST)
+    if len(errors) > 0:
+        for error in errors:
+                messages.error(request, errors[error])
+        return redirect("/")
+    else:
+        tobe_change.address_number  = request.POST["address_number"]
+        tobe_change.street = request.POST["street"]
+        tobe_change.city = request.POST["city"]
+        tobe_change.state = request.POST["state"]
+        tobe_change.zip_code = request.POST["zip_code"]
+        tobe_change.home_type = request.POST["home_type"]
+        tobe_change.save()
+        return redirect("/property_all")
+    
+
+
+def all_properties(request):
+    #generates a list of all your properties 
+    creator_properties = Property.objects.filter(creator = Userreg.objects.get(id = request.session["id"]))
+    
+    
+    context = {
+        "all_my_properties" : creator_properties        
+    }
+
+    return render ( request,"property_detail.html", context)
+
 
 def like_property(request, property_id):
     if "logged" not in request.session:

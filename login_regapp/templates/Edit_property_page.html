@@ -4,34 +4,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pass</title>
+    <title>Document</title>
 </head>
-<body>    
-    <h1>Passed Registration and Login {{ request.session.name }}</h1>
-    {% if messages %}
-    <ul>    
-        {% for message in messages %}    
-            <li>{{ message }}</li>    
-        {% endfor %}
-    </ul>
-    {% endif %}
-    <h2>Add a Property Here!</h2>
-    <form action="create_property" method="POST">
+<body>
+    
+    
+    <form action="/property/page/edit/{{tobe_change.id}}" method="POST">
         {% csrf_token %}
         <label>Address Number</label>
-        <input type="number" name="address_number"><br>
+        <input type="number" name="address_number" placeholder="{{ tobe_change.address_number }}"><br>
         
         <label>Street</label>
-        <input type="text" name="street"><br>
+        <input type="text" name="street" placeholder="{{ tobe_change.street }}"><br>
         
         <label>City</label>
-        <input type="text" name="city"><br>
+        <input type="text" name="city" placeholder="{{ tobe_change.city }}" ><br>
         
         <label>State</label>
-        <input type="text" name="state"><br>
+        <input type="text" name="state" placeholder="{{ tobe_change.state }}"><br>
         
         <label>Zip Code</label>
-        <input type="number" name="zip_code"><br>
+        <input type="number" name="zip_code" placeholder="{{ tobe_change.zip_code }}"><br>
         <label for="home_type">Home Type:</label>
         <select id="home_type" name="home_type">
             <option value="single_family_home">Single Family Home</option>
@@ -40,15 +33,9 @@
             <option value="multi_unit_building">Multi Unit Building</option>
             <option value="undeveloped_land">Undeveloped Land</option>
         </select>
-        <input type="submit" value="Add Property">
+        <input type="submit" value="Update Property">
     </form>
-    <a href="/property_all">See all my properties</a>
-    
-    
-    
-    <form action="/logout" method="post">
-        {% csrf_token %}        
-        <input type="submit" value="logout">       
-    </form>
+
+    <a href="/property_all">Go to previous page</a>
 </body>
 </html>

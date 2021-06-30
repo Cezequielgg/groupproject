@@ -71,5 +71,5 @@ class Property(models.Model):
     creator = models.ForeignKey(Userreg, related_name = "property_created", on_delete=models.CASCADE)
     users_that_liked = models.ManyToManyField(Userreg, related_name= "property_liked")
     created_at = models.DateTimeField(auto_now_add = True)
-    updated_at = models.DateTimeField(auto_now = True)
+    updated_at = models.DateTimeField(auto_now = True)    
     objects = PropertyManager()

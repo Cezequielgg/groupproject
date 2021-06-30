@@ -140,6 +140,7 @@ def edit_property(request, property_id ):
         tobe_change.state = request.POST["state"]
         tobe_change.zip_code = request.POST["zip_code"]
         tobe_change.home_type = request.POST["home_type"]
+        tobe_change.save()
         return redirect("/property_all")
     
 

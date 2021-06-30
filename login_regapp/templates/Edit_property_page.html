@@ -7,7 +7,9 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="edit/{{tobe_change.id}}" method="POST">
+    
+    
+    <form action="/property/page/edit/{{tobe_change.id}}" method="POST">
         {% csrf_token %}
         <label>Address Number</label>
         <input type="number" name="address_number" placeholder="{{ tobe_change.address_number }}"><br>
@@ -33,5 +35,7 @@
         </select>
         <input type="submit" value="Update Property">
     </form>
+
+    <a href="/property_all">Go to previous page</a>
 </body>
 </html>

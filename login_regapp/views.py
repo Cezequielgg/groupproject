@@ -67,7 +67,6 @@ def inpage(request):
     return render(request, "pass.html", context)
 
 
-
 def create_property(request):
     if "logged" not in request.session:
         return redirect('/')

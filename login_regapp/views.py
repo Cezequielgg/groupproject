@@ -66,7 +66,6 @@ def inpage(request):
         return redirect('/')
     return render(request, "pass.html", context)
 
-
 def create_property(request):
     if "logged" not in request.session:
         return redirect('/')
@@ -86,7 +85,14 @@ def create_property(request):
                 home_type =  request.POST["home_type"],
                 creator = Userreg.objects.get(email=request.session["email"])
             )
-            return redirect('/pass')
+            return redirect(f'property/{new_property.id}')
+
+def all_properties(request): 
+    all_properties = Property.objects.all()
+    context = {
+        "all_properties" : all_properties        
+    }
+    return render ( request,"all_properties.html", context)
 
 def property_detail(request, property_id):
     if "logged" not in request.session:
@@ -95,7 +101,7 @@ def property_detail(request, property_id):
     if len(property_with_id) == 0:
         return redirect('/pass')
     context = {
-        "current_user" : Userreg.objects.get(email=request.session["email"]),
+        "current_user" : Userreg.objects.get(id=request.session["id"]),
         "one_property" : Property.objects.get(id=property_id),
     }
     return render(request, "property_detail.html", context)
@@ -103,27 +109,22 @@ def property_detail(request, property_id):
 def delete_property(request, property_id):
     if "logged" not in request.session:
         return redirect('/')
-    property_with_id = Property.objects.filter(id=property_id)
     property_to_delete = Property.objects.get(id=property_id)
     property_to_delete.delete()
-    
-    
-    
     return redirect("/property_all")
 
-
-def update_page_property(request, property_id):
+def update_property(request, property_id):
     form_tobe_change = Property.objects.get(id=property_id)
     context = {
         "tobe_change" : form_tobe_change
     }
     return render(request,"Edit_property_page.html", context )
 
-
 def edit_property(request, property_id ):
     id = property_id
     tobe_change =  Property.objects.get(id=property_id)
     context = {
+        "current_user" : Userreg.objects.get(id=request.session["id"]),
         "id" : id, 
         "properties" : tobe_change
     }      
@@ -131,7 +132,7 @@ def edit_property(request, property_id ):
     if len(errors) > 0:
         for error in errors:
                 messages.error(request, errors[error])
-        return redirect("/")
+        return redirect("/update_page_property")
     else:
         tobe_change.address_number  = request.POST["address_number"]
         tobe_change.street = request.POST["street"]
@@ -140,36 +141,33 @@ def edit_property(request, property_id ):
         tobe_change.zip_code = request.POST["zip_code"]
         tobe_change.home_type = request.POST["home_type"]
         tobe_change.save()
-        return redirect("/property_all")
-    
-
-
-def all_properties(request):
-    #generates a list of all your properties 
-    creator_properties = Property.objects.filter(creator = Userreg.objects.get(id = request.session["id"]))
-    
-    
-    context = {
-        "all_my_properties" : creator_properties        
-    }
-
-    return render ( request,"property_detail.html", context)
-
+        return redirect("/property_all", context)
 
 def like_property(request, property_id):
     if "logged" not in request.session:
         return redirect('/')
     if request.method == "POST":
-        one_property = Property. objects.get(id=property_id)
-        current_user = Userreg.objects.get(email=request.session['email'])
-        one_property.users_that_like.add(current_user)
+        one_property = Property.objects.get(id=property_id)
+        current_user = Userreg.objects.get(id=request.session["id"])
+        one_property.users_that_liked.add(current_user)
     return redirect(f'/property/{one_property.id}')
 
 def unlike_property(request, property_id):
     if "logged" not in request.session:
         return redirect('/')
     if request.method == "POST":
-        one_property = Property. objects.get(id=property_id)
-        current_user = Userreg.objects.get(email=request.session['email'])
-        one_property.users_that_like.remove(current_user)
+        one_property = Property.objects.get(id=property_id)
+        current_user = Userreg.objects.get(id=request.session["id"])
+        one_property.users_that_liked.remove(current_user)
     return redirect(f'/property/{one_property.id}')
+
+def liked_properties(request,):
+    if "logged" not in request.session:
+        return redirect('/')
+    your_properties = Property.objects.filter(users_that_liked=request.session["id"])
+    current_user = Userreg.objects.get(id=request.session["id"])
+    context = {
+        "current_user" : current_user,
+        "your_properties" : your_properties        
+    }
+    return render ( request,"your_properties.html", context)

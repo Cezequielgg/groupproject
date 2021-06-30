@@ -4,10 +4,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pass</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Home Page</title>
 </head>
-<body>    
-    <h1>Passed Registration and Login {{ request.session.name }}</h1>
+<body>
+    <div id="navbar">
+        <div class="navbar-int">
+            <button class="nav-btn"><a href="/pass">Home</a></button>
+        </div>
+        <div class="navbar-int">
+            <button class="nav-btn"><a href="/property_all">Browse All Properties</a></button>
+        </div>
+        <div class="navbar-int">
+            <button class="nav-btn"><a href="/liked_properties">Your Liked Properties</a></button>
+        </div>
+        <div class="navbar-int">
+            <form action="/logout" method="post">
+                {% csrf_token %}        
+                <input type="submit" value="Logout" class="nav-btn">       
+            </form>
+        </div>
+    </div>
+    <h1>Welcome to NotZillow {{ request.session.name }}!</h1>
     {% if messages %}
     <ul>    
         {% for message in messages %}    
@@ -39,16 +58,8 @@
             <option value="condominium">Condominium</option>
             <option value="multi_unit_building">Multi Unit Building</option>
             <option value="undeveloped_land">Undeveloped Land</option>
-        </select>
-        <input type="submit" value="Add Property">
-    </form>
-    <a href="/property_all">See all my properties</a>
-    
-    
-    
-    <form action="/logout" method="post">
-        {% csrf_token %}        
-        <input type="submit" value="logout">       
+        </select><br>
+        <input type="submit" value="Add Property" id="addBtn">
     </form>
 </body>
 </html>

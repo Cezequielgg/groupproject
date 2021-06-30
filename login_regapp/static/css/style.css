@@ -1,0 +1,98 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: grey;
+}
+
+#navbar {
+  display: inline-block;
+  width: 99%;
+}
+
+.navbar-int {
+  display: inline-block;
+  width: 24%;
+  margin: 10px auto;
+}
+
+.nav-btn {
+  display: block;
+  width: 180px;
+  margin: 2px auto;
+  padding: 5px 0px;
+  border-radius: 4px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+label {
+  display: inline-block;
+  width: 130px;
+  text-align: right;
+  padding-right: 5px;
+  margin: 3px;
+}
+
+input {
+  display: inline-block;
+  width: 230px;
+  margin: 3px;
+}
+
+#addBtn {
+  background-color: green;
+  color: white;
+  width: 150px;
+  padding: 10px 20px;
+  margin-left: 220px;
+  margin-top: 10px;
+  border-radius: 4px;
+}
+
+h1 {
+  display: block;
+  margin: 2px auto;
+  width: 50%;
+  text-align: center;
+}
+
+#updateBtn {
+  background-color: orange;
+  color: white;
+  width: 150px;
+  padding: 10px 20px;
+  margin-left: 220px;
+  margin-top: 10px;
+  border-radius: 4px;
+}
+
+#deleteBtn {
+  background-color: red;
+  width: 180px;
+  padding: 10px 20px;
+  margin-left: 220px;
+  margin-top: 10px;
+  border-radius: 4px;
+}
+
+#deleteBtnLink {
+  color: white;
+}
+
+#unlikeBtn {
+  background-color: yellow;
+  display: inline-block;
+  width: 150px;
+}
+
+#likeBtn {
+  background-color: lightblue;
+  display: inline-block;
+  width: 150px;
+}

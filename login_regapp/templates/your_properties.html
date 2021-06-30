@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <title>Your Properties</title>
+</head>
+<body>
+  <div id="navbar">
+    <div class="navbar-int">
+        <button class="nav-btn"><a href="/pass">Home</a></button>
+    </div>
+    <div class="navbar-int">
+        <button class="nav-btn"><a href="/property_all">Browse All Properties</a></button>
+    </div>
+    <div class="navbar-int">
+      <button class="nav-btn"><a href="/liked_properties">Your Liked Properties</a></button>
+    </div>
+    <div class="navbar-int">
+        <form action="/logout" method="post">
+            {% csrf_token %}        
+            <input type="submit" value="Logout" class="nav-btn">       
+        </form>
+    </div>
+</div>
+  <h1>Your Liked Properties Page</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Address Number</th>
+        <th>Street</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Zip Code</th>
+        <th>Created By</th>
+        <th>Number of Likes</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for one_property in your_properties %}
+      <tr>
+        <td>{{one_property.address_number}}</td>
+        <td>{{one_property.street}}</td>
+        <td>{{one_property.city}}</td>
+        <td>{{one_property.state}}<td>
+        <td>{{one_property.zip_code}}</td>
+        <td>{{one_property.creator.first_name}}</td>
+        <td>{{one_property.users_that_liked.count}}</td>
+        <td><button class="tableBtn"><a href="/property/page/{{one_property.id}}">Edit Property</a></button></td>
+      
+    {% endfor %}
+  </tbody>
+  </table>
+</body>
+</html>

@@ -4,25 +4,49 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Property List</title>
 </head>
 <body>
-    <a href="/pass">Go to home page</a>
-    
-    {% for properties in all_my_properties %}  
-        
-        
-        <p>Address number: {{properties.address_number}}</p>
-        <p>Street address: {{properties.street}}</p>
-        <p>City: {{properties.city}}</p>
-        <p>State: {{properties.state}}</p>
-        <p>Event Created by:{{properties.creator.first_name}}</p>
-        
-        
-        <a href="/property/page/{{properties.id}}">Edit property</a>
-        <a href="/property/delete/{{properties.id}}">Delete properties</a>
-    {% endfor %}
-
-    
+    <div id="navbar">
+        <div class="navbar-int">
+            <button class="nav-btn"><a href="/pass">Home</a></button>
+        </div>
+        <div class="navbar-int">
+            <button class="nav-btn"><a href="/property_all">Browse All Properties</a></button>
+        </div>
+        <div class="navbar-int">
+            <button class="nav-btn"><a href="/liked_properties">Your Liked Properties</a></button>
+        </div>
+        <div class="navbar-int">
+            <form action="/logout" method="post">
+                {% csrf_token %}        
+                <input type="submit" value="Logout" class="nav-btn">       
+            </form>
+        </div>
+    </div>
+    <div>
+        <h1>Property Detail Page</h1>
+        <p>Address Number: {{one_property.address_number}}</p>
+        <p>Street: {{one_property.street}}</p>
+        <p>City: {{one_property.city}}</p>
+        <p>State: {{one_property.state}}</p>
+        <p>Zip Code: {{one_property.zip_code}}</p>
+        <p>Property Created by: {{one_property.creator.first_name}}</p>
+        <p>Number of Likes: {{one_property.users_that_liked.count}}</p>
+        <br>
+        {% if current_user in one_property.users_that_liked.all %}
+            <form action="/property/unlike/{{one_property.id}}" method="POST" class="like_unlike_forms">
+                {% csrf_token %}
+                <input type="submit" value="Unlike" id="unlikeBtn">
+            </form>
+        {% else %}
+        <form action="/property/like/{{one_property.id}}" method="POST" class="like_unlike_forms">
+            {% csrf_token %}
+            <input type="submit" value="Like" id="likeBtn">
+        </form>
+        {% endif %}
+    </div>
 </body>
 </html>

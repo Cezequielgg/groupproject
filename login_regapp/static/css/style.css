@@ -96,3 +96,42 @@ h1 {
   display: inline-block;
   width: 150px;
 }
+
+#registration {
+  margin-left: 20px;
+  margin-top: 40px;
+}
+
+#regBtn {
+  width:150px;
+  display: inline-block;
+  padding: 5px;
+  margin-left: 120px;
+  background-color: turquoise;
+}
+
+#login {
+  margin-left: 20px;
+  margin-top: 40px;
+}
+
+#loginBtn {
+  width:150px;
+  display: inline-block;
+  padding: 5px;
+  margin-left: 120px;
+  background-color: turquoise;
+}
+
+table {
+  display: inline-block;
+  margin: 40px auto;
+  border-collapse: collapse;
+  border: 2px solid orange;
+}
+
+th {
+  border: 2px dotted blue;
+  width: 100px;
+}
+

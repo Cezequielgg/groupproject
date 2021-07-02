@@ -50,7 +50,15 @@
         <td>{{one_property.zip_code}}</td>
         <td>{{one_property.creator.first_name}}</td>
         <td>{{one_property.users_that_liked.count}}</td>
-        <td><button class="tableBtn"><a href="/property/page/{{one_property.id}}">Edit Property</a></button></td>
+        <td>
+          {% if request.session.id == one_property.creator.id %}
+            <button class="tableBtn"><a href="/property/page/{{one_property.id}}">Edit Property</a></button>
+          {% endif %}
+          {% if request.session.id != one_property.creator.id %}
+            <button class="tableBtn"><a href="/property/{{one_property.id}}">Details</a></button>
+          {% endif %}
+
+        </td>
       
     {% endfor %}
   </tbody>

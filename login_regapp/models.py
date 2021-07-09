@@ -32,7 +32,7 @@ class Regvalidate(models.Manager):
             errors2['username'] = ("This email address hasn't been register")
         else:
             if not bcrypt.checkpw(postData['password'].encode(), user[0].password.encode()):
-                errors2['password'] = ("wrong password")           
+                errors2['password'] = ("Wrong password")           
         return errors2
 
 class Userreg(models.Model):

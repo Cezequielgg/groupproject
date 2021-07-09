@@ -28,44 +28,46 @@
     </div>
     <div>
         <h1>Edit Property Page</h1>
-        <form action="/property/page/edit/{{tobe_change.id}}" method="POST">
-            {% csrf_token %}
-            <label>Address Number</label>
-            <input type="number" name="address_number" value="{{ tobe_change.address_number }}"><br>
-            
-            <label>Street</label>
-            <input type="text" name="street" value="{{ tobe_change.street }}"><br>
-            
-            <label>City</label>
-            <input type="text" name="city" value="{{ tobe_change.city }}" ><br>
-            
-            <label>State</label>
-            <input type="text" name="state" value="{{ tobe_change.state }}"><br>
-            
-            <label>Zip Code</label>
-            <input type="number" name="zip_code" value="{{ tobe_change.zip_code }}"><br>
-            <label for="home_type">Home Type:</label>
-            <select id="home_type" name="home_type">
-                <option value="single_family_home">Single Family Home</option>
-                <option value="townhouse">Townhouse</option>
-                <option value="condominium">Condominium</option>
-                <option value="multi_unit_building">Multi Unit Building</option>
-                <option value="undeveloped_land">Undeveloped Land</option>
-            </select><br>
-            <input type="submit" value="Update Property" id="updateBtn">
-        </form>
-        {% if current_user in tobe_change.users_that_liked.all %}
-            <form action="/property/unlike/{{tobe_change.id}}" method="POST" class="like_unlike_forms">
+        <div class="formDiv">
+            <form action="/property/page/edit/{{tobe_change.id}}" method="POST">
                 {% csrf_token %}
-                <input type="submit" value="Unlike" id="unlikeBtn">
+                <label>Address Number</label>
+                <input type="number" name="address_number" value="{{ tobe_change.address_number }}"><br>
+                
+                <label>Street</label>
+                <input type="text" name="street" value="{{ tobe_change.street }}"><br>
+                
+                <label>City</label>
+                <input type="text" name="city" value="{{ tobe_change.city }}" ><br>
+                
+                <label>State</label>
+                <input type="text" name="state" value="{{ tobe_change.state }}"><br>
+                
+                <label>Zip Code</label>
+                <input type="number" name="zip_code" value="{{ tobe_change.zip_code }}"><br>
+                <label for="home_type">Home Type:</label>
+                <select id="home_type" name="home_type">
+                    <option value="single_family_home">Single Family Home</option>
+                    <option value="townhouse">Townhouse</option>
+                    <option value="condominium">Condominium</option>
+                    <option value="multi_unit_building">Multi Unit Building</option>
+                    <option value="undeveloped_land">Undeveloped Land</option>
+                </select><br>
+                <input type="submit" value="Update Property" id="updateBtn">
             </form>
-        {% else %}
-        <form action="/property/like/{{tobe_change.id}}" method="POST" class="like_unlike_forms">
-            {% csrf_token %}
-            <input type="submit" value="Like" id="likeBtn">
-        </form>
-        {% endif %}
-        <button id="deleteBtn"><a href="/property/delete/{{tobe_change.id}}" id="deleteBtnLink">Delete This Property</a></button>
+            {% if current_user in tobe_change.users_that_liked.all %}
+                <form action="/property/unlike/{{tobe_change.id}}" method="POST" class="like_unlike_forms">
+                    {% csrf_token %}
+                    <input type="submit" value="Unlike" id="unlikeBtnUpdate">
+                </form>
+            {% else %}
+            <form action="/property/like/{{tobe_change.id}}" method="POST" class="like_unlike_forms">
+                {% csrf_token %}
+                <input type="submit" value="Like" id="likeBtnUpdate">
+            </form>
+            {% endif %}
+            <button id="deleteBtn"><a href="/property/delete/{{tobe_change.id}}" id="deleteBtnLink">Delete This Property</a></button>
+        </div>
     </div>
 </body>
 </html>

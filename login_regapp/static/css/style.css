@@ -4,7 +4,7 @@
 }
 
 body {
-  background-color: grey;
+  background-color: rgb(189, 189, 189);
 }
 
 #navbar {
@@ -89,17 +89,42 @@ h1 {
   background-color: yellow;
   display: inline-block;
   width: 150px;
+  padding: 3px;
+  border-radius: 4px;
 }
 
 #likeBtn {
   background-color: lightblue;
   display: inline-block;
   width: 150px;
+  padding: 3px;
+  border-radius: 4px;
+}
+
+#unlikeBtnUpdate {
+  background-color: yellow;
+  display: inline-block;
+  width: 150px;
+  margin-left: 220px;
+  margin-top: 10px;
+  border-radius: 4px;
+  padding: 3px;
+}
+
+#likeBtnUpdate {
+  background-color: lightblue;
+  display: inline-block;
+  width: 150px;
+  margin-left: 220px;
+  margin-top: 10px;
+  border-radius: 4px;
+  padding: 3px;
 }
 
 #registration {
-  margin-left: 20px;
-  margin-top: 40px;
+  display: inline-block;
+  margin: 40px;
+  width: 45%;
 }
 
 #regBtn {
@@ -108,11 +133,14 @@ h1 {
   padding: 5px;
   margin-left: 120px;
   background-color: turquoise;
+  border-radius: 4px;
 }
 
 #login {
-  margin-left: 20px;
-  margin-top: 40px;
+  display: inline-block;
+  vertical-align: top;
+  margin: 40px;
+  width: 45%;
 }
 
 #loginBtn {
@@ -121,17 +149,48 @@ h1 {
   padding: 5px;
   margin-left: 120px;
   background-color: turquoise;
+  border-radius: 4px;
 }
 
 table {
-  display: inline-block;
+  display: block;
   margin: 40px auto;
   border-collapse: collapse;
-  border: 2px solid orange;
+  width: 1250px;
 }
 
 th {
-  border: 2px dotted blue;
-  width: 100px;
+  border: 2px solid black;
+  width: 150px;
+  padding: 2px;
+  background-color: rgb(255, 181, 71);
 }
 
+td {
+  border: 2px solid black;
+  padding: 4px;
+  background-color: rgb(255, 216, 158);
+}
+
+#prop-detail {
+  width: 220px;
+  margin: 10px auto;
+  vertical-align: middle;
+  outline: 2px dotted red;
+}
+
+.formDiv {
+  display: block;
+  width: 440px;
+  margin: 10px auto;
+  padding: 5px;
+}
+
+.errorText {
+  color: rgb(255, 0, 0);
+  font-size: large;
+  font-weight: bold;
+  margin-left: 20px;
+  margin-top: 20px;
+  list-style-type: none;
+}

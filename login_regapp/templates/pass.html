@@ -34,32 +34,34 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <h2>Add a Property Here!</h2>
-    <form action="create_property" method="POST">
-        {% csrf_token %}
-        <label>Address Number</label>
-        <input type="number" name="address_number"><br>
-        
-        <label>Street</label>
-        <input type="text" name="street"><br>
-        
-        <label>City</label>
-        <input type="text" name="city"><br>
-        
-        <label>State</label>
-        <input type="text" name="state"><br>
-        
-        <label>Zip Code</label>
-        <input type="number" name="zip_code"><br>
-        <label for="home_type">Home Type:</label>
-        <select id="home_type" name="home_type">
-            <option value="single_family_home">Single Family Home</option>
-            <option value="townhouse">Townhouse</option>
-            <option value="condominium">Condominium</option>
-            <option value="multi_unit_building">Multi Unit Building</option>
-            <option value="undeveloped_land">Undeveloped Land</option>
-        </select><br>
-        <input type="submit" value="Add Property" id="addBtn">
-    </form>
+    <div class="formDiv">
+        <h2>Add a Property Here</h2><br>
+        <form action="create_property" method="POST">
+            {% csrf_token %}
+            <label>Address Number</label>
+            <input type="number" name="address_number"><br>
+            
+            <label>Street</label>
+            <input type="text" name="street"><br>
+            
+            <label>City</label>
+            <input type="text" name="city"><br>
+            
+            <label>State</label>
+            <input type="text" name="state"><br>
+            
+            <label>Zip Code</label>
+            <input type="number" name="zip_code"><br>
+            <label for="home_type">Home Type:</label>
+            <select id="home_type" name="home_type">
+                <option value="single_family_home">Single Family Home</option>
+                <option value="townhouse">Townhouse</option>
+                <option value="condominium">Condominium</option>
+                <option value="multi_unit_building">Multi Unit Building</option>
+                <option value="undeveloped_land">Undeveloped Land</option>
+            </select><br>
+            <input type="submit" value="Add Property" id="addBtn">
+        </form>
+    </div>
 </body>
 </html>

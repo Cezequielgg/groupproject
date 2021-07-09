@@ -10,15 +10,15 @@
     <title>Login and Registration</title>
 </head>
 <body>
-    
-    <div id="registration"> 
-        {% if messages %}
+    {% if messages %}
         <ul class="messages">    
             {% for message in messages %}    
-                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                <li class="errorText">{{ message }}</li>    
             {% endfor %}
         </ul>
-        {% endif %}
+    {% endif %}
+    <div id="registration">
+        <h2>Register for NotZillow here</h2><br>
         <form action="/registration" method="post">
             {% csrf_token %}
                 <label for="first_name"><title></title>First Name</label>
@@ -34,8 +34,8 @@
                 <input type="submit" value="Register" id="regBtn">
         </form>    
     </div>
-    <br><hr><br>
     <div id="login">
+        <h2>Already registered? Login here</h2><br>
         <form action="/login" method="post">
             {% csrf_token %}
                 <label for="email"><title></title>Email</label>
